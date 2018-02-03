@@ -52,6 +52,9 @@ Get a list of stores with the given offset and limit
 Get a list of stores for a specific geo location including a radius in meter
 ...url/Stores?lat=0&long=0&radius=1000
 
+Get a list of stores with a minimal brezel rating
+...url/Stores?minrating=0&maxrating=5
+
 Delete a store from the database
 ...url/Stores/{id}
 

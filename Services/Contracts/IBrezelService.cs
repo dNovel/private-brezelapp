@@ -3,7 +3,7 @@ using Brezelapp.Models;
 
 namespace Brezelapp.Services.Contracts
 {
-    internal interface IBrezelService
+    public interface IBrezelService
     {
         Task<Brezel> CreateBrezel(Brezel brezel);
 

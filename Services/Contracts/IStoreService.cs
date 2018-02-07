@@ -4,7 +4,7 @@ using Brezelapp.Models;
 
 namespace Brezelapp.Services.Contracts
 {
-    internal interface IStoreService
+    public interface IStoreService
     {
         Task<Store> CreateStore(Store store);
 

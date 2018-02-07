@@ -15,6 +15,7 @@ namespace Brezelapp.Models
         public float Price { get; set; }
 
         private int rating;
+
         public int Rating
         {
             get

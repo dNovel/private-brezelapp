@@ -7,43 +7,43 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Brezelapp.Models;
 using Brezelapp.Services;
+using Brezelapp.Services.Contracts;
 
 namespace Brezelapp.Controllers.V1
 {
     [Route("api/[controller]")]
     public class StoresController : Controller
     {
-        public StoresController()
-        {
+        private IStoreService storeService;
+        private IBrezelService brezelService;
 
+        public StoresController(IStoreService storeService, IBrezelService brezelService)
+        {
+            this.storeService = storeService;
+            this.brezelService = brezelService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Store store)
         {
-            Store s = new Store()
+            try
             {
-                Id = 1337,
-                Longitude = 0.0d,
-                Latitude = 0.0d,
-                Brezels = new List<Brezel>(),
-                Name = "Test Store"
-            };
-
-            s.Brezels.Add(new Brezel()
+                var res = await this.storeService.CreateStore(store);
+                //return this.CreatedAtAction("Get", "StoresController", res.Id, res);
+                return this.Ok(res);
+            }
+            catch (Exception e)
             {
-                Id = 1,
-                Rating = 3,
-                Price = 5.0f
-            });
+                Console.WriteLine(e.Message);
+            }
 
-            return CreatedAtAction("Get", new { id = s.Id }, s);
+            return this.BadRequest("Error");
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRouteAttribute] int id)
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
-            return Ok(string.Format("Hello Store nr {0}", id));
+            return this.Ok(string.Format("Hello Store nr {0}", id));
         }
     }
 }

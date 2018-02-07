@@ -11,6 +11,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Brezelapp.Controllers.V1;
+using Brezelapp.Db;
+using Brezelapp.Services;
+using Brezelapp.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
+using Swashbuckle.AspNetCore;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Brezelapp
 {
@@ -35,6 +41,30 @@ namespace Brezelapp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Application Insights configuration
+            if (this.HostingEnvironment.IsStaging() || this.HostingEnvironment.IsProduction())
+            {
+                // TODO: Implement fully
+                services.AddApplicationInsightsTelemetry();
+            }
+            else if (this.HostingEnvironment.IsDevelopment())
+            {
+                // Add swagger documentation
+                services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info { Title = "BrezelAppApi", Version = "v1" });
+                });
+            }
+
+            // Add DbContext
+            services.AddDbContext<BrezelMSSqlContext>(options =>
+                options.UseSqlServer(this.Configuration.GetConnectionString("Brezelapp"))
+            );
+
+            // Add the transients and singletons
+            services.AddTransient<IStoreService, StoreService>();
+            services.AddTransient<IBrezelService, BrezelService>();
+
             // Add versioning
             services.AddApiVersioning(options =>
             {
@@ -55,12 +85,20 @@ namespace Brezelapp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (this.HostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                // Use swagger for documentation on the corresponding enpoint
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
             }
+
 
             app.UseMvc();
         }

@@ -2,14 +2,33 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Brezelapp.Models;
 using Brezelapp.Services.Contracts;
+using Brezelapp.Db;
 
 namespace Brezelapp.Services
 {
     internal class StoreService : IStoreService
     {
+        private BrezelMSSqlContext dbContext;
+
+        public StoreService(BrezelMSSqlContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         public async Task<Store> CreateStore(Store store)
         {
-            throw new System.NotImplementedException();
+            Store toAdd = new Store()
+            {
+                Name = store.Name,
+                Latitude = store.Latitude,
+                Longitude = store.Longitude,
+                Brezels = store.Brezels
+            };
+
+            await this.dbContext.Stores.AddAsync(toAdd);
+            await this.dbContext.SaveChangesAsync();
+
+            return store;
         }
 
         public async Task<bool> DeleteStoreById(int id)

@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Brezelapp.Models;
 using Brezelapp.Services;
 using Brezelapp.Services.Contracts;
+using AutoMapper;
+using Brezelapp.Models.Viewmodels;
 
 namespace Brezelapp.Controllers.V1
 {
@@ -17,17 +19,22 @@ namespace Brezelapp.Controllers.V1
         private IStoreService storeService;
         private IBrezelService brezelService;
 
-        public StoresController(IStoreService storeService, IBrezelService brezelService)
+        private IMapper autoMapper;
+
+        public StoresController(IStoreService storeService, IBrezelService brezelService, IMapper mapper)
         {
             this.storeService = storeService;
             this.brezelService = brezelService;
+            this.autoMapper = mapper;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Store store)
+        public async Task<IActionResult> Post([FromBody] StoreView storeView)
         {
             try
             {
+                Store store = this.autoMapper.Map<StoreView, Store>(storeView);
+
                 var res = await this.storeService.CreateStore(store);
                 //return this.CreatedAtAction("Get", "StoresController", res.Id, res);
                 return this.Ok(res);
@@ -43,6 +50,7 @@ namespace Brezelapp.Controllers.V1
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
+            // TODO: Correct implementation
             return this.Ok(string.Format("Hello Store nr {0}", id));
         }
     }

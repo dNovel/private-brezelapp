@@ -17,15 +17,7 @@ namespace Brezelapp.Services
 
         public async Task<Store> CreateStore(Store store)
         {
-            Store toAdd = new Store()
-            {
-                Name = store.Name,
-                Latitude = store.Latitude,
-                Longitude = store.Longitude,
-                Brezels = store.Brezels
-            };
-
-            await this.dbContext.Stores.AddAsync(toAdd);
+            await this.dbContext.Stores.AddAsync(store);
             await this.dbContext.SaveChangesAsync();
 
             return store;

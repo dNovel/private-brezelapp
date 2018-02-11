@@ -17,6 +17,9 @@ using Brezelapp.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore;
 using Swashbuckle.AspNetCore.Swagger;
+using AutoMapper;
+using Brezelapp.Models.Viewmodels;
+using Brezelapp.Models;
 
 namespace Brezelapp
 {
@@ -52,18 +55,27 @@ namespace Brezelapp
                 // Add swagger documentation
                 services.AddSwaggerGen(c =>
                 {
-                    c.SwaggerDoc("v1", new Info { Title = "BrezelAppApi", Version = "v1" });
+                    c.SwaggerDoc("v1", new Info { Title = "BrezelAppApi", Version = "v1", Description = "This is the documentation for the Brezelapp API v1. This API can be consumed from various applications as long as authentication is properly implemented." });
                 });
             }
 
             // Add DbContext
             services.AddDbContext<BrezelMSSqlContext>(options =>
-                options.UseSqlServer(this.Configuration.GetConnectionString("Brezelapp"))
+                options.UseSqlServer(this.Configuration.GetConnectionString("Azure"))
             );
 
             // Add the transients and singletons
             services.AddTransient<IStoreService, StoreService>();
             services.AddTransient<IBrezelService, BrezelService>();
+
+            // Configure AutoMapper for the ViewModel DomainModel mapping
+            MapperConfiguration autoMapperConfig = new MapperConfiguration(config =>
+            {
+                config.CreateMap<StoreView, Store>();
+                config.CreateMap<BrezelView, Brezel>();
+            });
+            IMapper mapper = autoMapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
 
             // Add versioning
             services.AddApiVersioning(options =>
@@ -95,7 +107,7 @@ namespace Brezelapp
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "BrezelApp Documentation v1");
                 });
             }
 

@@ -61,7 +61,7 @@ namespace Brezelapp
 
             // Add DbContext
             services.AddDbContext<BrezelMSSqlContext>(options =>
-                options.UseSqlServer(this.Configuration.GetConnectionString("Azure"))
+                options.UseSqlServer(this.Configuration.GetConnectionString("Default"))
             );
 
             // Add the transients and singletons

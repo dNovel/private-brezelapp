@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 using Brezelapp.Models;
 using Brezelapp.Services.Contracts;
 using Brezelapp.Db;
+using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Brezelapp.Services
 {
@@ -16,22 +19,64 @@ namespace Brezelapp.Services
 
         public async Task<Brezel> CreateBrezel(Brezel brezel)
         {
-            throw new System.NotImplementedException();
-        }
+            try
+            {
+                this.dbContext.Brezels.Add(brezel);
+                var touched = await this.dbContext.SaveChangesAsync();
 
-        public async Task<bool> DeleteBrezelById(int id)
-        {
-            throw new System.NotImplementedException();
+                if (touched < 0)
+                {
+                    return null;
+                }
+
+                return brezel;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<Brezel> GetBrezelById(int id)
         {
-            throw new System.NotImplementedException();
+            Brezel brezel = await this.dbContext.Brezels.FirstOrDefaultAsync(x => x.Id == id);
+            return brezel;
         }
 
-        public async Task<int> UpdateBrezel(int id, Brezel brezel)
+        async Task<int> IBrezelService.UpdateBrezel(int id, Brezel brezel)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                brezel.Id = id;
+                this.dbContext.Brezels.Update(brezel);
+                return await this.dbContext.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
         }
+
+        public async Task<bool> DeleteBrezelById(int id)
+        {
+            try
+            {
+                Brezel brezel = new Brezel()
+                {
+                    Id = id,
+                };
+
+                this.dbContext.Brezels.Remove(brezel);
+                await this.dbContext.SaveChangesAsync();
+                // TODO: make this cleaner
+                return true;
+            }
+            catch (Exception e)
+            {
+                // TODO: Do anything
+                return false;
+            }
+        }
+
     }
 }

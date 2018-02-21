@@ -36,22 +36,99 @@ namespace Brezelapp.Controllers.V1
                 Store store = this.autoMapper.Map<StoreView, Store>(storeView);
 
                 var res = await this.storeService.CreateStore(store);
-                //return this.CreatedAtAction("Get", "StoresController", res.Id, res);
+
+                if (res == null)
+                {
+                    return this.StatusCode(500);
+                }
+
+                // TODO: return this.CreatedAtAction("GetStoreById", "Stores", res.Id, res);
                 return this.Ok(res);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                return this.StatusCode(500);
             }
-
-            return this.BadRequest("Error");
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] int id)
+        [HttpGet("{id}", Name = "GetStoreById")]
+        public async Task<IActionResult> GetStoreById([FromRoute] int id)
         {
             // TODO: Correct implementation
-            return this.Ok(string.Format("Hello Store nr {0}", id));
+            try
+            {
+                Store store = await this.storeService.GetStoreById(id);
+                return this.Ok(store);
+            } catch (Exception e)
+            {
+                // refactore for datatype
+                return this.StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllStores([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "limit")] int limit = 20)
+        {
+            // TODO: Correct implementation
+            try
+            {
+                List<Store> stores = await this.storeService.GetStores(offset, limit);
+
+                if (stores == null)
+                {
+                    return this.NotFound();
+                }
+
+                return this.Ok(stores);
+            }
+            catch (Exception e)
+            {
+                // refactore for datatype
+                return this.StatusCode(500);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] StoreView storeView)
+        {
+            // TODO: Correct implementation
+            try
+            {
+                Store store = this.autoMapper.Map<StoreView, Store>(storeView);
+                Store storeUpdated = await this.storeService.UpdateStore(id, store);
+                if (storeUpdated == null)
+                {
+                    return this.NotFound();
+                }
+
+                return this.Ok(storeUpdated);
+            }
+            catch (Exception e)
+            {
+                // refactore for datatype
+                return this.StatusCode(500);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
+        {
+            // TODO: Correct implementation
+            try
+            {
+                bool result = await this.storeService.DeleteStoreById(id);
+                if (!result)
+                {
+                    return this.NotFound();
+                }
+
+                return this.NoContent();
+            }
+            catch (Exception e)
+            {
+                // refactore for datatype
+                return this.StatusCode(500);
+            }
         }
     }
 }

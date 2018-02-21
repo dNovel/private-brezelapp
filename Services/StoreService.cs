@@ -3,6 +3,9 @@ using System.Threading.Tasks;
 using Brezelapp.Models;
 using Brezelapp.Services.Contracts;
 using Brezelapp.Db;
+using System;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Brezelapp.Services
 {
@@ -25,32 +28,69 @@ namespace Brezelapp.Services
 
         public async Task<bool> DeleteStoreById(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                Store store = new Store()
+                {
+                    Id = id,
+                };
+
+                this.dbContext.Stores.Remove(store);
+                await this.dbContext.SaveChangesAsync();
+                // TODO: make this cleaner
+                return true;
+            }
+            catch (Exception e)
+            {
+                // TODO: Do anything
+                return false;
+            }
         }
 
         public async Task<Store> GetStoreById(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                Store store = await this.dbContext.Stores.FirstOrDefaultAsync(s => s.Id == id);
+                return store;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public async Task<List<Store>> GetStores(int offset, int limit)
         {
-            throw new System.NotImplementedException();
+            List<Store> stores = await this.dbContext.Stores.OrderBy(x => x.Id).Skip(offset).Take(limit).ToListAsync();
+            return stores;
         }
 
         public async Task<List<Store>> GetStoresByLocation(double lat, double lon, int range)
         {
+            // TODO: Implement this
             throw new System.NotImplementedException();
         }
 
         public async Task<List<Store>> GetStoresByRating(int minRating, int maxRating)
         {
-            throw new System.NotImplementedException();
+            List<Store> stores = await this.dbContext.Brezels.Include(x => x.Rating <= maxRating && x.Rating >= minRating).OrderBy(x => x.Id).Select(x => x.Store).ToListAsync();
+            return stores;
         }
 
-        public async Task<int> UpdateStore(int id, Store store)
+        public async Task<Store> UpdateStore(int id, Store store)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                store.Id = id;
+                this.dbContext.Stores.Update(store);
+                await this.dbContext.SaveChangesAsync();
+                return store;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
     }
 }

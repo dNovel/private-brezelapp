@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Brezelapp.Services
 {
-    internal class BrezelService : IBrezelService
+    public class BrezelService : IBrezelService
     {
         private BrezelMSSqlContext dbContext;
 
@@ -31,7 +31,7 @@ namespace Brezelapp.Services
 
                 return brezel;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -51,7 +51,7 @@ namespace Brezelapp.Services
                 this.dbContext.Brezels.Update(brezel);
                 return await this.dbContext.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return 0;
             }
@@ -71,7 +71,7 @@ namespace Brezelapp.Services
                 // TODO: make this cleaner
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // TODO: Do anything
                 return false;

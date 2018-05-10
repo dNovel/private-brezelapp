@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Brezelapp.Models;
-using Brezelapp.Services;
-using Brezelapp.Services.Contracts;
-using AutoMapper;
-using Brezelapp.Models.Viewmodels;
+﻿// <copyright file="StoresController.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
+// </copyright>
 
 namespace Brezelapp.Controllers.V1
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using Brezelapp.Models;
+    using Brezelapp.Models.Viewmodels;
+    using Brezelapp.Services.Contracts;
+    using Microsoft.AspNetCore.Mvc;
+
     [Route("api/[controller]")]
     public class StoresController : Controller
     {
@@ -29,11 +29,11 @@ namespace Brezelapp.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] StoreView storeView)
+        public async Task<IActionResult> Post([FromBody] StoreRequest storeView)
         {
             try
             {
-                Store store = this.autoMapper.Map<StoreView, Store>(storeView);
+                Store store = this.autoMapper.Map<StoreRequest, Store>(storeView);
 
                 var res = await this.storeService.CreateStore(store);
 
@@ -45,7 +45,7 @@ namespace Brezelapp.Controllers.V1
                 // TODO: return this.CreatedAtAction("GetStoreById", "Stores", res.Id, res);
                 return this.Ok(res);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return this.StatusCode(500);
             }
@@ -59,7 +59,8 @@ namespace Brezelapp.Controllers.V1
             {
                 Store store = await this.storeService.GetStoreById(id);
                 return this.Ok(store);
-            } catch (Exception e)
+            }
+            catch (Exception)
             {
                 // refactore for datatype
                 return this.StatusCode(500);
@@ -81,7 +82,7 @@ namespace Brezelapp.Controllers.V1
 
                 return this.Ok(stores);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // refactore for datatype
                 return this.StatusCode(500);
@@ -89,12 +90,12 @@ namespace Brezelapp.Controllers.V1
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] StoreView storeView)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] StoreRequest storeView)
         {
             // TODO: Correct implementation
             try
             {
-                Store store = this.autoMapper.Map<StoreView, Store>(storeView);
+                Store store = this.autoMapper.Map<StoreRequest, Store>(storeView);
                 Store storeUpdated = await this.storeService.UpdateStore(id, store);
                 if (storeUpdated == null)
                 {
@@ -103,7 +104,7 @@ namespace Brezelapp.Controllers.V1
 
                 return this.Ok(storeUpdated);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // refactore for datatype
                 return this.StatusCode(500);
@@ -124,7 +125,7 @@ namespace Brezelapp.Controllers.V1
 
                 return this.NoContent();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // refactore for datatype
                 return this.StatusCode(500);

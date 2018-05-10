@@ -1,26 +1,31 @@
-using System.ComponentModel.DataAnnotations;
+// <copyright file="Brezel.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
+// </copyright>
 
-namespace Brezelapp.Models.Viewmodels
+namespace Brezelapp.Models
 {
-    public class BrezelView
+    using System.ComponentModel.DataAnnotations;
+
+    public class Brezel
     {
-        public BrezelView()
-        {
-
-        }
-
-        [Required]
-        public float Price { get; set; }
-
         private int rating;
 
-        [Required]
+        public Brezel()
+        {
+        }
+
+        [Key]
+        public int Id { get; set; }
+
+        public float Price { get; set; }
+
         public int Rating
         {
             get
             {
                 return this.rating;
             }
+
             set
             {
                 if (value > 5)
@@ -37,5 +42,7 @@ namespace Brezelapp.Models.Viewmodels
                 }
             }
         }
+
+        public Store Store { get; set; }
     }
 }

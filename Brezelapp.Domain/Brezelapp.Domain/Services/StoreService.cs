@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Brezelapp.Services
 {
-    internal class StoreService : IStoreService
+    public class StoreService : IStoreService
     {
         private BrezelMSSqlContext dbContext;
 
@@ -40,7 +40,7 @@ namespace Brezelapp.Services
                 // TODO: make this cleaner
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // TODO: Do anything
                 return false;
@@ -54,7 +54,7 @@ namespace Brezelapp.Services
                 Store store = await this.dbContext.Stores.FirstOrDefaultAsync(s => s.Id == id);
                 return store;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -87,7 +87,7 @@ namespace Brezelapp.Services
                 await this.dbContext.SaveChangesAsync();
                 return store;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

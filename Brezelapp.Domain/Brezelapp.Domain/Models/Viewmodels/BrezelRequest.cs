@@ -1,27 +1,32 @@
-using System.ComponentModel.DataAnnotations;
+﻿// <copyright file="BrezelRequest.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace Brezelapp.Models
+namespace Brezelapp.Models.Viewmodels
 {
-    public class Brezel
+    using System.ComponentModel.DataAnnotations;
+
+    public class BrezelRequest
     {
-        public Brezel()
+        private int rating;
+
+        public BrezelRequest()
         {
 
         }
 
-        [Key]
-        public int Id { get; set; }
-
+        [Required]
         public float Price { get; set; }
 
-        private int rating;
 
+        [Required]
         public int Rating
         {
             get
             {
                 return this.rating;
             }
+
             set
             {
                 if (value > 5)
@@ -38,7 +43,5 @@ namespace Brezelapp.Models
                 }
             }
         }
-
-        public Store Store { get; set; }
     }
 }

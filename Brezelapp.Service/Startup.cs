@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Brezelapp.Controllers.V1;
-using Brezelapp.Db;
-using Brezelapp.Services;
-using Brezelapp.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
-using Swashbuckle.AspNetCore;
-using Swashbuckle.AspNetCore.Swagger;
-using AutoMapper;
-using Brezelapp.Models.Viewmodels;
-using Brezelapp.Models;
+﻿// <copyright file="Startup.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
+// </copyright>
 
 namespace Brezelapp
 {
+    using AutoMapper;
+    using Brezelapp.Controllers.V1;
+    using Brezelapp.Db;
+    using Brezelapp.Models;
+    using Brezelapp.Models.Viewmodels;
+    using Brezelapp.Services;
+    using Brezelapp.Services.Contracts;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Versioning;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Swashbuckle.AspNetCore.Swagger;
+
     public class Startup
     {
-        private ApiVersion apiVersion;
-
         public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             this.Configuration = configuration;
@@ -61,8 +56,7 @@ namespace Brezelapp
 
             // Add DbContext
             services.AddDbContext<BrezelMSSqlContext>(options =>
-                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultWindows"))
-            );
+                options.UseSqlServer(this.Configuration.GetConnectionString("DefaultWindows")));
 
             // Add the transients and singletons
             services.AddTransient<IStoreService, StoreService>();
@@ -71,8 +65,8 @@ namespace Brezelapp
             // Configure AutoMapper for the ViewModel DomainModel mapping
             MapperConfiguration autoMapperConfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<StoreView, Store>();
-                config.CreateMap<BrezelView, Brezel>();
+                config.CreateMap<StoreRequest, Store>();
+                config.CreateMap<BrezelRequest, Brezel>();
             });
             IMapper mapper = autoMapperConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -110,7 +104,6 @@ namespace Brezelapp
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "BrezelApp Documentation v1");
                 });
             }
-
 
             app.UseMvc();
         }

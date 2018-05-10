@@ -1,13 +1,16 @@
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+// <copyright file="Store.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
+// </copyright>
 
 namespace Brezelapp.Models
 {
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+
     public class Store
     {
         public Store()
         {
-
         }
 
         [Key]

@@ -11,9 +11,10 @@ using System;
 namespace Brezelapp.Migrations
 {
     [DbContext(typeof(BrezelMSSqlContext))]
-    partial class BrezelMSSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20180510153812_UpdatedAutoDatedAndControllers")]
+    partial class UpdatedAutoDatedAndControllers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,8 +25,6 @@ namespace Brezelapp.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("AddressId");
 
                     b.Property<string>("City");
 
@@ -87,8 +86,6 @@ namespace Brezelapp.Migrations
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateUpdated");
-
-                    b.Property<Guid>("GeoLocId");
 
                     b.Property<double>("Latitude");
 

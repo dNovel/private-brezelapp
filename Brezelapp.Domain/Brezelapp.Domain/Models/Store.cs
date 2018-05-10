@@ -4,11 +4,12 @@
 
 namespace Brezelapp.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
+    using Brezelapp.Contracts;
 
-    public class Store
+    public class Store : IEntityAutoDateFields
     {
         public Store()
         {
@@ -16,6 +17,12 @@ namespace Brezelapp.Models
 
         [Key]
         public int Id { get; set; }
+
+        public Guid StoreId { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateUpdated { get; set; }
 
         [Required]
         public string Name { get; set; }

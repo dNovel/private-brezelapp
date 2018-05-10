@@ -6,14 +6,12 @@ namespace Brezelapp.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Brezelapp.Contracts;
 
-    public class Rating
+    public class Rating : IEntityAutoDateFields
     {
-        private DateTime dateUpdated;
-
         public Rating()
         {
-            this.DateCreated = DateTime.UtcNow;
         }
 
         [Key]
@@ -22,21 +20,13 @@ namespace Brezelapp.Models
         [Required]
         public int Value { get; set; }
 
-        public DateTime DateCreated { get; protected set; }
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateUpdated { get; set; }
 
         [Required]
         public string UserEmail { get; set; }
 
         public string Text { get; set; }
-
-        public DateTime GetDateUpdated()
-        {
-            return this.dateUpdated;
-        }
-
-        public void SetDateUpdated()
-        {
-            this.dateUpdated = DateTime.Now;
-        }
     }
 }

@@ -53,6 +53,7 @@ namespace Brezelapp.Services
             {
                 brezel.Id = id;
                 this.dbContext.Brezels.Update(brezel);
+
                 return await this.dbContext.SaveChangesAsync();
             }
             catch (Exception)

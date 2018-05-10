@@ -12,10 +12,9 @@ namespace Brezelapp.Models.Viewmodels
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public double Latitude { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public double Longitude { get; set; }
+        public AddressRequest Address { get; set; }
     }
 }

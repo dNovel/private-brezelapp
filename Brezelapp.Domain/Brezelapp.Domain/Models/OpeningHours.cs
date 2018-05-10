@@ -4,10 +4,12 @@
 
 namespace Brezelapp.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Brezelapp.Contracts;
 
-    public class OpeningHours
+    public class OpeningHours : IEntityAutoDateFields
     {
         private Timespan[] timespans;
 
@@ -19,5 +21,9 @@ namespace Brezelapp.Models
         public int Id { get; set; }
 
         public Dictionary<System.DayOfWeek, List<Timespan>> OpeningTimespans { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateUpdated { get; set; }
     }
 }

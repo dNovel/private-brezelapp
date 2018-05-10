@@ -29,13 +29,15 @@ namespace Brezelapp.Controllers.V1
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(StoreResponse), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Post([FromBody] StoreRequest storeView)
         {
             try
             {
                 Store store = this.autoMapper.Map<StoreRequest, Store>(storeView);
-
-                var res = await this.storeService.CreateStore(store);
+                Store res = await this.storeService.CreateStore(store);
 
                 if (res == null)
                 {
@@ -43,7 +45,8 @@ namespace Brezelapp.Controllers.V1
                 }
 
                 // TODO: return this.CreatedAtAction("GetStoreById", "Stores", res.Id, res);
-                return this.Ok(res);
+                StoreResponse storeResponse = this.autoMapper.Map<Store, StoreResponse>(store);
+                return this.Ok(storeResponse);
             }
             catch (Exception)
             {
@@ -52,13 +55,18 @@ namespace Brezelapp.Controllers.V1
         }
 
         [HttpGet("{id}", Name = "GetStoreById")]
+        [ProducesResponseType(typeof(StoreResponse), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> GetStoreById([FromRoute] int id)
         {
             // TODO: Correct implementation
             try
             {
                 Store store = await this.storeService.GetStoreById(id);
-                return this.Ok(store);
+                StoreResponse storeResponse = this.autoMapper.Map<Store, StoreResponse>(store);
+
+                return this.Ok(storeResponse);
             }
             catch (Exception)
             {
@@ -68,6 +76,9 @@ namespace Brezelapp.Controllers.V1
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(List<StoreResponse>), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> GetAllStores([FromQuery(Name = "offset")] int offset = 0, [FromQuery(Name = "limit")] int limit = 20)
         {
             // TODO: Correct implementation
@@ -80,7 +91,9 @@ namespace Brezelapp.Controllers.V1
                     return this.NotFound();
                 }
 
-                return this.Ok(stores);
+                List<StoreResponse> storeResponse = this.autoMapper.Map<List<Store>, List<StoreResponse>>(stores);
+
+                return this.Ok(storeResponse);
             }
             catch (Exception)
             {
@@ -90,6 +103,9 @@ namespace Brezelapp.Controllers.V1
         }
 
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(StoreResponse), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] StoreRequest storeView)
         {
             // TODO: Correct implementation
@@ -102,7 +118,9 @@ namespace Brezelapp.Controllers.V1
                     return this.NotFound();
                 }
 
-                return this.Ok(storeUpdated);
+                StoreResponse storeResponse = this.autoMapper.Map<Store, StoreResponse>(storeUpdated);
+
+                return this.Ok(storeResponse);
             }
             catch (Exception)
             {
@@ -112,6 +130,9 @@ namespace Brezelapp.Controllers.V1
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             // TODO: Correct implementation

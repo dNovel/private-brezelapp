@@ -4,42 +4,19 @@
 
 namespace Brezelapp.Models.Viewmodels
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class BrezelRequest
     {
-        private int rating;
+        [Required]
+        public string Name { get; set; }
 
-        public BrezelRequest()
-        {
-        }
+        public string Description { get; set; }
 
         [Required]
-        public float Price { get; set; }
+        public PriceRequest Price { get; set; }
 
-        [Required]
-        public int Rating
-        {
-            get
-            {
-                return this.rating;
-            }
-
-            set
-            {
-                if (value > 5)
-                {
-                    this.rating = 5;
-                }
-                else if (value < 0)
-                {
-                    this.rating = 0;
-                }
-                else
-                {
-                    this.rating = value;
-                }
-            }
-        }
+        public List<RatingRequest> Rating { get; set; }
     }
 }

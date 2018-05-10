@@ -66,7 +66,22 @@ namespace Brezelapp
             MapperConfiguration autoMapperConfig = new MapperConfiguration(config =>
             {
                 config.CreateMap<StoreRequest, Store>();
+                config.CreateMap<Store, StoreResponse>();
+
                 config.CreateMap<BrezelRequest, Brezel>();
+                config.CreateMap<Brezel, BrezelResponse>();
+
+                config.CreateMap<AddressRequest, Address>();
+                config.CreateMap<Address, AddressResponse>();
+
+                config.CreateMap<GeoLocRequest, GeoLoc>();
+                config.CreateMap<GeoLoc, GeoLocResponse>();
+
+                config.CreateMap<PriceRequest, Price>();
+                config.CreateMap<Price, PriceResponse>();
+
+                config.CreateMap<RatingRequest, Rating>();
+                config.CreateMap<Rating, RatingResponse>();
             });
             IMapper mapper = autoMapperConfig.CreateMapper();
             services.AddSingleton(mapper);

@@ -4,9 +4,11 @@
 
 namespace Brezelapp.Models
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
+    using Brezelapp.Contracts;
 
-    public class Price
+    public class Price : IEntityAutoDateFields
     {
         public Price(string currency, string amount)
         {
@@ -20,6 +22,10 @@ namespace Brezelapp.Models
 
         [Key]
         public int Id { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public DateTime DateUpdated { get; set; }
 
         // TODO: Refactor currency to a package with ISO values
         public string Currency { get; set; }

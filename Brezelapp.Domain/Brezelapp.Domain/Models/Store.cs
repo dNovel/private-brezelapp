@@ -24,7 +24,6 @@ namespace Brezelapp.Models
 
         public DateTime DateUpdated { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -41,7 +40,6 @@ namespace Brezelapp.Models
             }
         }
 
-        [Required]
         public Address Address { get; set; }
 
         public List<Brezel> Brezels { get; set; }

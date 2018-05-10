@@ -8,10 +8,8 @@ namespace Brezelapp.Models
 
     public class GeoLocRequest
     {
-        [Required]
         public double Latitude { get; set; }
 
-        [Required]
         public double Longitude { get; set; }
     }
 }

@@ -41,9 +41,9 @@ namespace Brezelapp.Models
 
             set
             {
-                var countries = new GeonamesISOCountryReader().GetDefault();
-                var discCountry = countries.Where(c => c.CountryName == value).Single().Alpha3;
-                this.countryAlpha3 = discCountry;
+                //var countries = new GeonamesISOCountryReader().GetDefault();
+                //var discCountry = countries.Where(c => c.CountryName == value).Single().Alpha3;
+                this.countryAlpha3 = value;
             }
         }
 

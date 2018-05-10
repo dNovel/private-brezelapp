@@ -48,9 +48,9 @@ namespace Brezelapp.Controllers.V1
                 StoreResponse storeResponse = this.autoMapper.Map<Store, StoreResponse>(store);
                 return this.Ok(storeResponse);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return this.StatusCode(500);
+                return this.StatusCode(500, e);
             }
         }
 

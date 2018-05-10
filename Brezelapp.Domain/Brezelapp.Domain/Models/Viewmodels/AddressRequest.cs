@@ -20,21 +20,8 @@ namespace Brezelapp.Models
         [Required]
         public string City { get; set; }
 
-        public string Country
-        {
-            get
-            {
-                return this.Country;
-            }
-
-            set
-            {
-                if (value == null)
-                {
-                    this.Country = "DEU";
-                }
-            }
-        }
+        [Required]
+        public string Country { get; set; }
 
         public GeoLocRequest GeoLoc { get; set; }
     }

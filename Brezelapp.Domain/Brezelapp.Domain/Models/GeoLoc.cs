@@ -16,7 +16,7 @@ namespace Brezelapp.Models
             this.Longitude = longitude;
         }
 
-        protected GeoLoc()
+        public GeoLoc()
         {
         }
 
@@ -29,8 +29,8 @@ namespace Brezelapp.Models
 
         public DateTime DateUpdated { get; set; }
 
-        public double Latitude { get; protected set; }
+        public double Latitude { get; set; }
 
-        public double Longitude { get; protected set; }
+        public double Longitude { get; set; }
     }
 }

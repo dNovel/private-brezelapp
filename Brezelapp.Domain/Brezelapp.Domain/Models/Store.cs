@@ -6,6 +6,7 @@ namespace Brezelapp.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Store
     {
@@ -16,10 +17,30 @@ namespace Brezelapp.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
-        public double Latitude { get; set; }
+        public string Description { get; set; }
 
-        public double Longitude { get; set; }
+        public int Rating
+        {
+            get
+            {
+                int ratAcc = 0;
+                this.Brezels.ForEach(b => ratAcc += b.Rating.Value);
+                ratAcc = ratAcc / this.Brezels.Count;
+
+                return ratAcc;
+            }
+        }
+
+        [Required]
+        public Address Address { get; set; }
+
+        public List<Brezel> Brezels { get; set; }
+
+        public List<Rating> Ratings { get; set; }
+
+        public OpeningHours OpeningHours { get; set; }
     }
 }

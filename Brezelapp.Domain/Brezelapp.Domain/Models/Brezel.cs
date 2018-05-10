@@ -8,7 +8,7 @@ namespace Brezelapp.Models
 
     public class Brezel
     {
-        private int rating;
+        private Rating rating;
 
         public Brezel()
         {
@@ -17,32 +17,17 @@ namespace Brezelapp.Models
         [Key]
         public int Id { get; set; }
 
-        public float Price { get; set; }
+        [Required]
+        public Price Price { get; set; }
 
-        public int Rating
-        {
-            get
-            {
-                return this.rating;
-            }
+        [Required]
+        public Rating Rating { get; set; }
 
-            set
-            {
-                if (value > 5)
-                {
-                    this.rating = 5;
-                }
-                else if (value < 0)
-                {
-                    this.rating = 0;
-                }
-                else
-                {
-                    this.rating = value;
-                }
-            }
-        }
-
+        [Required]
         public Store Store { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
     }
 }

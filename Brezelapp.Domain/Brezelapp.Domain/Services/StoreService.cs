@@ -74,7 +74,7 @@ namespace Brezelapp.Services
 
         public async Task<List<Store>> GetStoresByRating(int minRating, int maxRating)
         {
-            List<Store> stores = await this.dbContext.Brezels.Include(x => x.Rating <= maxRating && x.Rating >= minRating).OrderBy(x => x.Id).Select(x => x.Store).ToListAsync();
+            List<Store> stores = await this.dbContext.Brezels.Include(x => x.Rating.Value <= maxRating && x.Rating.Value >= minRating).OrderBy(x => x.Id).Select(x => x.Store).ToListAsync();
             return stores;
         }
 

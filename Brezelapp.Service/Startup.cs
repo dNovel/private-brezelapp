@@ -39,7 +39,7 @@ namespace Brezelapp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Application Insights configuration
+            // TODO: Application Insights configuration
             if (this.HostingEnvironment.IsStaging() || this.HostingEnvironment.IsProduction())
             {
                 // TODO: Implement fully

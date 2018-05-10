@@ -4,12 +4,11 @@
 
 namespace Brezelapp.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     public class Brezel
     {
-        private Rating rating;
-
         public Brezel()
         {
         }
@@ -20,8 +19,7 @@ namespace Brezelapp.Models
         [Required]
         public Price Price { get; set; }
 
-        [Required]
-        public Rating Rating { get; set; }
+        public List<Rating> Ratings { get; set; }
 
         [Required]
         public Store Store { get; set; }

@@ -27,7 +27,7 @@ namespace Brezelapp.Models
             get
             {
                 int ratAcc = 0;
-                this.Brezels.ForEach(b => ratAcc += b.Rating.Value);
+                this.Brezels.ForEach(brezel => brezel.Ratings.ForEach(rating => ratAcc += rating.Value));
                 ratAcc = ratAcc / this.Brezels.Count;
 
                 return ratAcc;
@@ -41,6 +41,6 @@ namespace Brezelapp.Models
 
         public List<Rating> Ratings { get; set; }
 
-        public OpeningHours OpeningHours { get; set; }
+        // public OpeningHours OpeningHours { get; set; }
     }
 }

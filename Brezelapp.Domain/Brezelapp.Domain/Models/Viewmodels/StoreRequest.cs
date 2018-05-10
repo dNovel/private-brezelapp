@@ -1,5 +1,5 @@
-﻿// <copyright file="StoreRequest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="StoreRequest.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
 // </copyright>
 
 namespace Brezelapp.Models.Viewmodels

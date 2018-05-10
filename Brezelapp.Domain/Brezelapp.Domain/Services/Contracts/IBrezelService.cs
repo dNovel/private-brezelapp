@@ -1,12 +1,12 @@
-// <copyright file="StoreRequest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+// <copyright file="IBrezelService.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
 // </copyright>
-
-using Brezelapp.Models;
-using System.Threading.Tasks;
 
 namespace Brezelapp.Services.Contracts
 {
+    using System.Threading.Tasks;
+    using Brezelapp.Models;
+
     public interface IBrezelService
     {
         Task<Brezel> CreateBrezel(Brezel brezel);

@@ -1,14 +1,18 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Brezelapp.Models;
-using Brezelapp.Services.Contracts;
-using Brezelapp.Db;
-using System;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+// <copyright file="StoreService.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
+// </copyright>
 
 namespace Brezelapp.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Brezelapp.Db;
+    using Brezelapp.Models;
+    using Brezelapp.Services.Contracts;
+    using Microsoft.EntityFrameworkCore;
+
     public class StoreService : IStoreService
     {
         private BrezelMSSqlContext dbContext;
@@ -37,6 +41,7 @@ namespace Brezelapp.Services
 
                 this.dbContext.Stores.Remove(store);
                 await this.dbContext.SaveChangesAsync();
+
                 // TODO: make this cleaner
                 return true;
             }
@@ -74,7 +79,7 @@ namespace Brezelapp.Services
 
         public async Task<List<Store>> GetStoresByRating(int minRating, int maxRating)
         {
-            List<Store> stores = await this.dbContext.Brezels.Include(x => x.Rating.Value <= maxRating && x.Rating.Value >= minRating).OrderBy(x => x.Id).Select(x => x.Store).ToListAsync();
+            List<Store> stores = await this.dbContext.Brezels.Include(brezel => brezel.Ratings.Aggregate(0, (a, b) => a + b.Value) <= maxRating && brezel.Ratings.Aggregate(0, (a, b) => a + b.Value) >= minRating).OrderBy(brezel => brezel.Id).Select(brezel => brezel.Store).ToListAsync();
             return stores;
         }
 

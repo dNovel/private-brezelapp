@@ -4,6 +4,12 @@
     <AssemblyName>Brezelapp</AssemblyName>
     <RootNamespace>Brezelapp</RootNamespace>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>Brezelapp.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>Brezelapp.Service.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Content Remove="stylecop.json" />
   </ItemGroup>

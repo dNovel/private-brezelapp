@@ -1,13 +1,17 @@
-using System.Threading.Tasks;
-using Brezelapp.Models;
-using Brezelapp.Services.Contracts;
-using Brezelapp.Db;
-using System;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
+// <copyright file="BrezelService.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
+// </copyright>
 
 namespace Brezelapp.Services
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Brezelapp.Db;
+    using Brezelapp.Models;
+    using Brezelapp.Services.Contracts;
+    using Microsoft.EntityFrameworkCore;
+
     public class BrezelService : IBrezelService
     {
         private BrezelMSSqlContext dbContext;
@@ -68,6 +72,7 @@ namespace Brezelapp.Services
 
                 this.dbContext.Brezels.Remove(brezel);
                 await this.dbContext.SaveChangesAsync();
+
                 // TODO: make this cleaner
                 return true;
             }
@@ -77,6 +82,5 @@ namespace Brezelapp.Services
                 return false;
             }
         }
-
     }
 }

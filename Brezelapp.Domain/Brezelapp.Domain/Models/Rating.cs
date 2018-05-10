@@ -1,19 +1,19 @@
-﻿// <copyright file="Store.cs" company="Dominik Steffen">
+﻿// <copyright file="Rating.cs" company="Dominik Steffen">
 // Copyright (c) Dominik Steffen. All rights reserved.
 // </copyright>
 
-using System;
-using System.ComponentModel.DataAnnotations;
-
 namespace Brezelapp.Models
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
     public class Rating
     {
         private DateTime dateUpdated;
 
         public Rating()
         {
-            DateCreated = DateTime.UtcNow;
+            this.DateCreated = DateTime.UtcNow;
         }
 
         [Key]

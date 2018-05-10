@@ -1,5 +1,5 @@
-﻿// <copyright file="BrezelRequest.cs" company="PlaceholderCompany">
-// Copyright (c) PlaceholderCompany. All rights reserved.
+﻿// <copyright file="BrezelRequest.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
 // </copyright>
 
 namespace Brezelapp.Models.Viewmodels
@@ -12,12 +12,10 @@ namespace Brezelapp.Models.Viewmodels
 
         public BrezelRequest()
         {
-
         }
 
         [Required]
         public float Price { get; set; }
-
 
         [Required]
         public int Rating

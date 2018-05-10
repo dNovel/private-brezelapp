@@ -1,9 +1,13 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Brezelapp.Models;
+// <copyright file="IStoreService.cs" company="Dominik Steffen">
+// Copyright (c) Dominik Steffen. All rights reserved.
+// </copyright>
 
 namespace Brezelapp.Services.Contracts
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using Brezelapp.Models;
+
     public interface IStoreService
     {
         Task<Store> CreateStore(Store store);

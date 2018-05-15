@@ -5,8 +5,9 @@
 namespace Brezelapp.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using Brezelapp.Services.Contracts;
 
-    public class AddressRequest
+    public class AddressRequest : IMappable<Address>
     {
         [Required]
         public string Street { get; set; }
@@ -24,5 +25,18 @@ namespace Brezelapp.Models
         public string Country { get; set; }
 
         public GeoLocRequest GeoLoc { get; set; }
+
+        public Address MapToDbModel()
+        {
+            return new Address()
+            {
+                Street = this.Street,
+                StreetNr = this.StreetNr,
+                Zipcode = this.Zipcode,
+                City = this.City,
+                Country = this.Country,
+                GeoLoc = this.GeoLoc?.MapToDbModel() ?? new GeoLoc()
+            };
+        }
     }
 }

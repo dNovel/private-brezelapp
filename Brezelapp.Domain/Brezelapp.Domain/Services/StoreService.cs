@@ -52,11 +52,11 @@ namespace Brezelapp.Services
             }
         }
 
-        public async Task<Store> GetStoreById(int id)
+        public async Task<Store> GetStoreById(Guid id)
         {
             try
             {
-                Store store = await this.dbContext.Stores.FirstOrDefaultAsync(s => s.Id == id);
+                Store store = await this.dbContext.Stores.Include(o => o.Address).Include(o => o.Address.GeoLoc).FirstOrDefaultAsync(s => s.EntityId == id);
                 return store;
             }
             catch (Exception)

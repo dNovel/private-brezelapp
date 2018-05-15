@@ -4,6 +4,7 @@
 
 namespace Brezelapp.Services.Contracts
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Brezelapp.Models;
@@ -12,7 +13,7 @@ namespace Brezelapp.Services.Contracts
     {
         Task<Store> CreateStore(Store store);
 
-        Task<Store> GetStoreById(int id);
+        Task<Store> GetStoreById(Guid id);
 
         Task<List<Store>> GetStores(int offset, int limit);
 

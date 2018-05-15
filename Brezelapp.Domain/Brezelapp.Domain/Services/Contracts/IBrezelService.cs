@@ -4,6 +4,7 @@
 
 namespace Brezelapp.Services.Contracts
 {
+    using System;
     using System.Threading.Tasks;
     using Brezelapp.Models;
 
@@ -11,7 +12,7 @@ namespace Brezelapp.Services.Contracts
     {
         Task<Brezel> CreateBrezel(Brezel brezel);
 
-        Task<Brezel> GetBrezelById(int id);
+        Task<Brezel> GetBrezelById(Guid id);
 
         Task<int> UpdateBrezel(int id, Brezel brezel);
 

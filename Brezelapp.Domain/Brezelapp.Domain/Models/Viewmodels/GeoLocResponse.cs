@@ -5,12 +5,12 @@
 namespace Brezelapp.Models
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
-    using Brezelapp.Contracts;
+    using Newtonsoft.Json;
 
     public class GeoLocResponse
     {
-        public Guid GeoLocId { get; set; }
+        [JsonProperty("Id")]
+        public Guid EntityId { get; set; }
 
         public double Latitude { get; protected set; }
 

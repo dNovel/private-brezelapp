@@ -6,8 +6,9 @@ namespace Brezelapp.Models.Viewmodels
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Brezelapp.Services.Contracts;
 
-    public class BrezelRequest
+    public class BrezelRequest : IMappable<Brezel>
     {
         [Required]
         public string Name { get; set; }
@@ -17,6 +18,17 @@ namespace Brezelapp.Models.Viewmodels
         [Required]
         public PriceRequest Price { get; set; }
 
-        public List<RatingRequest> Rating { get; set; }
+        public List<RatingRequest> Ratings { get; set; }
+
+        public Brezel MapToDbModel()
+        {
+            return new Brezel()
+            {
+                Name = this.Name,
+                Description = this.Description,
+                Price = this.Price.MapToDbModel(),
+                Ratings = this.Ratings.ConvertAll(r => r.MapToDbModel())
+            };
+        }
     }
 }

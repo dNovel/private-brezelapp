@@ -7,23 +7,24 @@ namespace Brezelapp.Models
     using System;
     using System.ComponentModel.DataAnnotations;
     using Brezelapp.Contracts;
+    using Brezelapp.DB;
 
-    public class GeoLoc : IEntityAutoDateFields
+    public class GeoLoc : EntityModel, IEntityAutoDateFields
     {
         public GeoLoc(double latitude, double longitude)
+            : base()
         {
             this.Latitude = latitude;
             this.Longitude = longitude;
         }
 
         public GeoLoc()
+            : base()
         {
         }
 
         [Key]
         public int Id { get; set; }
-
-        public Guid GeoLocId { get; set; }
 
         public DateTime DateCreated { get; set; }
 

@@ -65,22 +65,16 @@ namespace Brezelapp
             // Configure AutoMapper for the ViewModel DomainModel mapping
             MapperConfiguration autoMapperConfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<StoreRequest, Store>().ForMember(m => m.Address, o => o.MapFrom(f => f.Address));
-                config.CreateMap<Store, StoreResponse>().ForMember(m => m.Address, o => o.MapFrom(f => f.Address));
+                config.CreateMap<Store, StoreResponse>();
 
-                config.CreateMap<BrezelRequest, Brezel>();
                 config.CreateMap<Brezel, BrezelResponse>();
 
-                config.CreateMap<AddressRequest, Address>();
                 config.CreateMap<Address, AddressResponse>();
 
-                config.CreateMap<GeoLocRequest, GeoLoc>();
                 config.CreateMap<GeoLoc, GeoLocResponse>();
 
-                config.CreateMap<PriceRequest, Price>();
                 config.CreateMap<Price, PriceResponse>();
 
-                config.CreateMap<RatingRequest, Rating>();
                 config.CreateMap<Rating, RatingResponse>();
             });
             IMapper mapper = autoMapperConfig.CreateMapper();

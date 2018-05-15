@@ -36,7 +36,7 @@ namespace Brezelapp.Controllers.V1
         {
             try
             {
-                Store store = this.autoMapper.Map<StoreRequest, Store>(storeView);
+                Store store = storeView.MapToDbModel();
                 Store res = await this.storeService.CreateStore(store);
 
                 if (res == null)
@@ -58,7 +58,7 @@ namespace Brezelapp.Controllers.V1
         [ProducesResponseType(typeof(StoreResponse), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetStoreById([FromRoute] int id)
+        public async Task<IActionResult> GetStoreById([FromRoute] Guid id)
         {
             // TODO: Correct implementation
             try
@@ -111,7 +111,7 @@ namespace Brezelapp.Controllers.V1
             // TODO: Correct implementation
             try
             {
-                Store store = this.autoMapper.Map<StoreRequest, Store>(storeView);
+                Store store = storeView.MapToDbModel();
                 Store storeUpdated = await this.storeService.UpdateStore(id, store);
                 if (storeUpdated == null)
                 {

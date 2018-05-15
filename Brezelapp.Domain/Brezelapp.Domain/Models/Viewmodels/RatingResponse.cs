@@ -5,10 +5,12 @@
 namespace Brezelapp.Models
 {
     using System;
+    using Newtonsoft.Json;
 
     public class RatingResponse
     {
-        public Guid RatingId { get; set; }
+        [JsonProperty("Id")]
+        public Guid EntityId { get; set; }
 
         public int Value { get; set; }
 

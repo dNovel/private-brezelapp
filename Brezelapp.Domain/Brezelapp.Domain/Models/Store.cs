@@ -7,18 +7,19 @@ namespace Brezelapp.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Brezelapp.Contracts;
+    using Brezelapp.DB;
 
-    public class Store : IEntityAutoDateFields
+    public class Store : EntityModel, IEntityAutoDateFields
     {
         public Store()
+            : base()
         {
         }
 
         [Key]
         public int Id { get; set; }
-
-        public Guid StoreId { get; set; }
 
         public DateTime DateCreated { get; set; }
 
@@ -32,9 +33,18 @@ namespace Brezelapp.Models
         {
             get
             {
+                if (this.Brezels == null)
+                {
+                    return 0;
+                }
+
                 int ratAcc = 0;
-                this.Brezels.ForEach(brezel => brezel.Ratings.ForEach(rating => ratAcc += rating.Value));
-                ratAcc = ratAcc / this.Brezels.Count;
+                this.Brezels?.ForEach(brezel => brezel.Ratings.ForEach(rating => ratAcc += rating.Value));
+
+                // Save this so we dont run into race conditions
+                int c = this.Brezels.Count;
+
+                ratAcc = ratAcc / (c == 0 ? 1 : c);
 
                 return ratAcc;
             }

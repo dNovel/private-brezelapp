@@ -6,8 +6,9 @@ namespace Brezelapp.Models.Viewmodels
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Brezelapp.Services.Contracts;
 
-    public class StoreRequest
+    public class StoreRequest : IMappable<Store>
     {
         [Required]
         public string Name { get; set; }
@@ -16,5 +17,15 @@ namespace Brezelapp.Models.Viewmodels
 
         [Required]
         public AddressRequest Address { get; set; }
+
+        public Store MapToDbModel()
+        {
+            return new Store()
+            {
+                Name = this.Name,
+                Description = this.Description,
+                Address = this.Address.MapToDbModel()
+            };
+        }
     }
 }

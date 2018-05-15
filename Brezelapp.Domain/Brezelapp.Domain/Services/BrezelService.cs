@@ -41,9 +41,9 @@ namespace Brezelapp.Services
             }
         }
 
-        public async Task<Brezel> GetBrezelById(int id)
+        public async Task<Brezel> GetBrezelById(Guid id)
         {
-            Brezel brezel = await this.dbContext.Brezels.FirstOrDefaultAsync(x => x.Id == id);
+            Brezel brezel = await this.dbContext.Brezels.FirstOrDefaultAsync(x => x.EntityId == id);
             return brezel;
         }
 

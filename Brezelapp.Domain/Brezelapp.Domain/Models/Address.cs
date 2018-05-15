@@ -6,23 +6,24 @@ namespace Brezelapp.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
     using Brezelapp.Contracts;
+    using Brezelapp.DB;
     using NISOCountries.GeoNames;
 
-    public class Address : IEntityAutoDateFields
+    public class Address : EntityModel, IEntityAutoDateFields
     {
         private string countryAlpha3;
         private GeoLoc geoLoc;
 
         public Address()
+            : base()
         {
         }
 
         [Key]
         public int Id { get; set; }
-
-        public Guid AddressId { get; set; }
 
         public string Street { get; set; }
 
@@ -56,7 +57,7 @@ namespace Brezelapp.Models
 
             set
             {
-                this.geoLoc = new GeoLoc(value.Latitude, value.Longitude);
+                this.geoLoc = value;
             }
         }
 

@@ -25,8 +25,6 @@ namespace Brezelapp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AddressId");
-
                     b.Property<string>("City");
 
                     b.Property<string>("Country");
@@ -34,6 +32,8 @@ namespace Brezelapp.Migrations
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateUpdated");
+
+                    b.Property<Guid>("EntityId");
 
                     b.Property<int?>("GeoLocId");
 
@@ -55,13 +55,16 @@ namespace Brezelapp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("BrezelId");
+                    b.Property<Guid>("BrezelId")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Description");
+
+                    b.Property<Guid>("EntityId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -88,7 +91,7 @@ namespace Brezelapp.Migrations
 
                     b.Property<DateTime>("DateUpdated");
 
-                    b.Property<Guid>("GeoLocId");
+                    b.Property<Guid>("EntityId");
 
                     b.Property<double>("Latitude");
 
@@ -112,6 +115,11 @@ namespace Brezelapp.Migrations
 
                     b.Property<DateTime>("DateUpdated");
 
+                    b.Property<Guid>("EntityId");
+
+                    b.Property<Guid>("PriceId")
+                        .ValueGeneratedOnAdd();
+
                     b.HasKey("Id");
 
                     b.ToTable("Price");
@@ -127,6 +135,8 @@ namespace Brezelapp.Migrations
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateUpdated");
+
+                    b.Property<Guid>("EntityId");
 
                     b.Property<int?>("StoreId");
 
@@ -151,7 +161,7 @@ namespace Brezelapp.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AddressId");
+                    b.Property<int?>("AddressId");
 
                     b.Property<DateTime>("DateCreated");
 
@@ -159,10 +169,9 @@ namespace Brezelapp.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<Guid>("EntityId");
 
-                    b.Property<Guid>("StoreId");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -206,8 +215,7 @@ namespace Brezelapp.Migrations
                 {
                     b.HasOne("Brezelapp.Models.Address", "Address")
                         .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AddressId");
                 });
 #pragma warning restore 612, 618
         }

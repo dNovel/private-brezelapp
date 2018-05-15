@@ -7,17 +7,21 @@ namespace Brezelapp.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Brezelapp.Contracts;
+    using Brezelapp.DB;
 
-    public class Brezel : IEntityAutoDateFields
+    public class Brezel : EntityModel, IEntityAutoDateFields
     {
         public Brezel()
+            : base()
         {
         }
 
         [Key]
         public int Id { get; set; }
 
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid BrezelId { get; set; }
 
         public DateTime DateCreated { get; set; }

@@ -7,10 +7,12 @@ namespace Brezelapp.Models.Viewmodels
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Newtonsoft.Json;
 
     public class StoreResponse
     {
-        public Guid StoreId { get; set; }
+        [JsonProperty("Id")]
+        public Guid EntityId { get; set; }
 
         public string Name { get; set; }
 

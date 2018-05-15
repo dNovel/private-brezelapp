@@ -6,6 +6,8 @@ namespace Brezelapp.Db
 {
     using System;
     using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Brezelapp.Contracts;
     using Brezelapp.Models;
     using Microsoft.EntityFrameworkCore;
@@ -26,25 +28,25 @@ namespace Brezelapp.Db
 
         public DbSet<Brezel> Brezels { get; set; }
 
-        public override int SaveChanges()
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var now = DateTime.Now;
 
             this.ChangeTracker.DetectChanges();
             foreach (var item in this.ChangeTracker.Entries()
                                   .Where(i => i.State == EntityState.Added || i.State == EntityState.Modified)
-                                  .Where(i => i as IEntityAutoDateFields != null))
+                                  .Where(i => i.Entity as IEntityAutoDateFields != null))
             {
                 if (item.State == EntityState.Added)
                 {
-                    (item as IEntityAutoDateFields).DateCreated = now;
+                    (item.Entity as IEntityAutoDateFields).DateCreated = now;
                 }
 
-                (item as IEntityAutoDateFields).DateUpdated = now;
+                (item.Entity as IEntityAutoDateFields).DateUpdated = now;
             }
 
             // Call the SaveChanges method on the context;
-            return base.SaveChanges();
+            return await base.SaveChangesAsync();
         }
     }
 }

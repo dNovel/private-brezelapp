@@ -6,9 +6,11 @@ namespace Brezelapp.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Brezelapp.Contracts;
+    using Brezelapp.DB;
 
-    public class Price : IEntityAutoDateFields
+    public class Price : EntityModel, IEntityAutoDateFields
     {
         public Price(string currency, string amount)
         {
@@ -17,11 +19,15 @@ namespace Brezelapp.Models
         }
 
         protected Price()
+            : base()
         {
         }
 
         [Key]
         public int Id { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid PriceId { get; set; }
 
         public DateTime DateCreated { get; set; }
 

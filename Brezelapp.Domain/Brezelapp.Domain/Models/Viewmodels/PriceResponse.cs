@@ -5,10 +5,12 @@
 namespace Brezelapp.Models
 {
     using System;
+    using Newtonsoft.Json;
 
     public class PriceResponse
     {
-        public Guid PriceId { get; set; }
+        [JsonProperty("Id")]
+        public Guid EntityId { get; set; }
 
         public string Currency { get; set; }
 

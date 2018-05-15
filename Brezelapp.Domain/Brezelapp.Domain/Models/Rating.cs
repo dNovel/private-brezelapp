@@ -6,11 +6,21 @@ namespace Brezelapp.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     using Brezelapp.Contracts;
+    using Brezelapp.DB;
 
-    public class Rating : IEntityAutoDateFields
+    public class Rating : EntityModel, IEntityAutoDateFields
     {
+        public Rating(int value, string useremail, string text)
+        {
+            this.Value = value;
+            this.UserEmail = useremail;
+            this.Text = text;
+        }
+
         public Rating()
+            : base()
         {
         }
 

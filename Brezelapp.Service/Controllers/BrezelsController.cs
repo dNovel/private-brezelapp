@@ -35,7 +35,7 @@ namespace Brezelapp.Controllers.V1
         {
             try
             {
-                Brezel brezel = this.autoMapper.Map<BrezelRequest, Brezel>(brezelReq);
+                Brezel brezel = brezelReq.MapToDbModel();
 
                 Brezel createdBrezel = await this.brezelService.CreateBrezel(brezel);
 
@@ -59,7 +59,7 @@ namespace Brezelapp.Controllers.V1
         [ProducesResponseType(typeof(BrezelResponse), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> GetBrezelById([FromRoute] int id)
+        public async Task<IActionResult> GetBrezelById([FromRoute] Guid id)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Brezelapp.Controllers.V1
         {
             try
             {
-                Brezel brezel = this.autoMapper.Map<BrezelRequest, Brezel>(brezelReq);
+                Brezel brezel = brezelReq.MapToDbModel();
 
                 int touched = await this.brezelService.UpdateBrezel(id, brezel);
 

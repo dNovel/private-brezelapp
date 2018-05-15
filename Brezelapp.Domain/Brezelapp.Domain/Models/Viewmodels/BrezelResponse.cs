@@ -6,10 +6,12 @@ namespace Brezelapp.Models.Viewmodels
 {
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
     public class BrezelResponse
     {
-        public Guid BrezelId { get; set; }
+        [JsonProperty("Id")]
+        public Guid EntityId { get; set; }
 
         public string Name { get; set; }
 

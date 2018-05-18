@@ -24,7 +24,7 @@ namespace Brezelapp.Models.Viewmodels
             {
                 Name = this.Name,
                 Description = this.Description,
-                Address = this.Address.MapToDbModel()
+                Address = this.Address?.MapToDbModel()
             };
         }
     }

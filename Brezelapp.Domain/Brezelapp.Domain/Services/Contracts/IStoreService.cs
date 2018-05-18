@@ -21,8 +21,8 @@ namespace Brezelapp.Services.Contracts
 
         Task<List<Store>> GetStoresByRating(int minRating, int maxRating);
 
-        Task<Store> UpdateStore(int id, Store store);
+        Task<Store> UpdateStore(Guid id, Store store);
 
-        Task<bool> DeleteStoreById(int id);
+        Task<bool> DeleteStoreById(Guid id);
     }
 }

@@ -102,17 +102,17 @@ namespace Brezelapp.Controllers.V1
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{storeId}")]
         [ProducesResponseType(typeof(StoreResponse), 200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] StoreRequest storeView)
+        public async Task<IActionResult> Update([FromRoute] Guid storeId, [FromBody] StoreRequest storeView)
         {
             // TODO: Correct implementation
             try
             {
                 Store store = storeView.MapToDbModel();
-                Store storeUpdated = await this.storeService.UpdateStore(id, store);
+                Store storeUpdated = await this.storeService.UpdateStore(storeId, store);
                 if (storeUpdated == null)
                 {
                     return this.NotFound();
@@ -122,23 +122,22 @@ namespace Brezelapp.Controllers.V1
 
                 return this.Ok(storeResponse);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // refactore for datatype
-                return this.StatusCode(500);
+                return this.StatusCode(500, e.Message);
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{storeId}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        public async Task<IActionResult> Delete([FromRoute] Guid storeId)
         {
-            // TODO: Correct implementation
             try
             {
-                bool result = await this.storeService.DeleteStoreById(id);
+                bool result = await this.storeService.DeleteStoreById(storeId);
                 if (!result)
                 {
                     return this.NotFound();

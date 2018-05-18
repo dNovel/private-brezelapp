@@ -12,6 +12,7 @@ namespace Brezelapp.Services
     using Brezelapp.Models;
     using Brezelapp.Services.Contracts;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     public class StoreService : IStoreService
     {
@@ -30,24 +31,17 @@ namespace Brezelapp.Services
             return store;
         }
 
-        public async Task<bool> DeleteStoreById(int id)
+        public async Task<bool> DeleteStoreById(Guid storeId)
         {
             try
             {
-                Store store = new Store()
-                {
-                    Id = id,
-                };
-
-                this.dbContext.Stores.Remove(store);
+                this.dbContext.Stores.Remove(await this.dbContext.Stores.FirstOrDefaultAsync(s => s.EntityId.Equals(storeId)));
                 await this.dbContext.SaveChangesAsync();
 
-                // TODO: make this cleaner
                 return true;
             }
             catch (Exception)
             {
-                // TODO: Do anything
                 return false;
             }
         }
@@ -67,7 +61,7 @@ namespace Brezelapp.Services
 
         public async Task<List<Store>> GetStores(int offset, int limit)
         {
-            List<Store> stores = await this.dbContext.Stores.OrderBy(x => x.Id).Skip(offset).Take(limit).ToListAsync();
+            List<Store> stores = await this.dbContext.Stores.Include(o => o.Address).OrderBy(x => x.Id).Skip(offset).Take(limit).ToListAsync();
             return stores;
         }
 
@@ -83,14 +77,27 @@ namespace Brezelapp.Services
             return stores;
         }
 
-        public async Task<Store> UpdateStore(int id, Store store)
+        public async Task<Store> UpdateStore(Guid storeId, Store changedStore)
         {
             try
             {
-                store.Id = id;
-                this.dbContext.Stores.Update(store);
-                await this.dbContext.SaveChangesAsync();
-                return store;
+                Store tmpStore = await this.dbContext.Stores.FirstOrDefaultAsync(s => s.EntityId.Equals(storeId));
+
+                if (tmpStore != null)
+                {
+                    tmpStore.Name = changedStore.Name;
+                    tmpStore.Description = changedStore.Description;
+                    tmpStore.Address = changedStore.Address ?? tmpStore.Address;
+
+                    EntityEntry<Store> updatedStore = this.dbContext.Stores.Update(tmpStore);
+                    await this.dbContext.SaveChangesAsync();
+                    return updatedStore.Entity;
+                }
+                else
+                {
+                    // Store not found
+                    return null;
+                }
             }
             catch (Exception)
             {

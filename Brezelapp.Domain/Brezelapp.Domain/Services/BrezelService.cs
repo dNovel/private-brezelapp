@@ -35,7 +35,7 @@ namespace Brezelapp.Services
 
                 return brezel;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return null;
             }

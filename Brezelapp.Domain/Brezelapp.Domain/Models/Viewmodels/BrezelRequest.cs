@@ -20,6 +20,9 @@ namespace Brezelapp.Models.Viewmodels
 
         public List<RatingRequest> Ratings { get; set; }
 
+        [Required]
+        public System.Guid StoreId { get; set; }
+
         public Brezel MapToDbModel()
         {
             return new Brezel()

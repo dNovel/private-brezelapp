@@ -21,9 +21,6 @@ namespace Brezelapp.Models
         [Key]
         public int Id { get; set; }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid BrezelId { get; set; }
-
         public DateTime DateCreated { get; set; }
 
         public DateTime DateUpdated { get; set; }

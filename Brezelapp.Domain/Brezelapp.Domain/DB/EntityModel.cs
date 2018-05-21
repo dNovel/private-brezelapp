@@ -13,7 +13,6 @@ namespace Brezelapp.DB
             this.EntityId = Guid.NewGuid();
         }
 
-        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid EntityId { get; protected set; }
     }
 }
